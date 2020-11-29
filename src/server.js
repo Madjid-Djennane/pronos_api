@@ -44,8 +44,8 @@ process.on('unhandledRejection', (reason, p) => {
     throw ('Unhandled Rejection at: Promise', p, 'reason:', reason)
 })
 // Run server
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3003
 app.set('port', port)
-// kill $(lsof -t -i:3000) : use to kill if EADDR:3000
+// kill $(lsof -t -i:3003) : use to kill if EADDR:3003
 
 app.listen(port, () => console.log(`Running on localhost:${port}`))

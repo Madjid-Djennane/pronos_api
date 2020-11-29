@@ -13,8 +13,13 @@ const getUsers = () => {
     return User.find({}).lean()
 }
 
+const getUserWithEmail = (params) => {
+    return User.findOne(params)
+}
+
 module.exports = {
     createUser,
     deleteOne,
-    getUsers
+    getUsers,
+    getUserWithEmail
 }

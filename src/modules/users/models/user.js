@@ -17,7 +17,6 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            select: false,
             minlength: [6, 'Password too short (min 6 chars.)']
         },
         role: {type: String, enum: [Users.ADMIN, Users.BASIC], default: Users.BASIC}

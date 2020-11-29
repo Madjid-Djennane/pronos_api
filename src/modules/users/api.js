@@ -4,10 +4,9 @@ const teamUsesCases = require('../teams/use-cases')
 
 module.exports = function (router) {
 
-    router.get('/new_user', function (req, res, next) {
-        const { username, password } = req.query
+    router.post('/new_user', function (req, res, next) {
         let new_user
-        usersUseCases.createUser(req.query)
+        usersUseCases.createUser(req.body)
             .then(user => {
                 new_user = user
             })
@@ -28,22 +27,30 @@ module.exports = function (router) {
     router.post('/login', async function (req, res, next) {
         try {
             const { email, password } = req.body
-            const user = await userRepo.getUserWithPasswordHash({ email: email.toLowerCase() })
+            
+            const user = await userRepo.getUserWithEmail({ email: email.toLowerCase() })
 
             if (!user) {
-                const err = new Error('User does not exist.')
+                res.status(404)
+                return res.json({ err: 'User does not exist.' })
+                /* const err = new Error('User does not exist.')
                 err.code = 404
-                throw err
+                throw err */
             }
             if (user.verified === false) {
-                const err = new Error('User not verified.')
+                res.status(404)
+                return res.json({ err: 'User not verified.' })
+
+                /* const err = new Error('User not verified.')
                 err.code = 403
-                throw err
+                throw err */
             }
 
             // check if password matches
             user.comparePassword(password, async function (err, isMatch) {
-                if (err) { return next(err) }
+                if (err) {
+                    return next(err)
+                 }
 
                 if (!isMatch) {
                     const error = new Error('User does not exist.')
