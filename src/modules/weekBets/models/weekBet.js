@@ -4,7 +4,8 @@ const { Game } = require('../../games/models/game')
 const weekBetSchema = new mongoose.Schema({
     gamesList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Game' }] ,
     startDate: { type: Date},
-    endDate: { type: Date }
+    endDate: { type: Date },
+    status: { type: String, enum: ['pending', 'done', 'noWeekBet'], default: 'pending' }
 })
 
 weekBetSchema.pre('remove', async function(next) {

@@ -20,10 +20,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // morgan
 myMorgan(app)
 
-app.use(function(req, res, next) {
+/* app.use(function(req, res, next) {
     res.setHeader("Content-Security-Policy", "script-src 'self' https://apis.google.com");
     return next();
-});
+}); */
 
 
 // Health check

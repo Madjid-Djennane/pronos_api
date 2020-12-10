@@ -16,9 +16,14 @@ const deleteAll = () => {
     return Game.deleteMany({})
 }
 
+const update = (params) => {
+    return Game.findByIdAndUpdate(params._id, params)
+}
+
 module.exports = {
     insert,
     insertMany,
     findGamesPopulated,
-    deleteAll
+    deleteAll,
+    update
 }

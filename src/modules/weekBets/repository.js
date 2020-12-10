@@ -6,7 +6,8 @@ const insertOne = params => {
 
 const getCurrentWeekBets = () => {
     const dateTime = new Date()
-    return WeekBet.find({ startDate: {'$lt': dateTime}, endDate: {'$gte': dateTime} }).populate({
+    // return WeekBet.findOne({ startDate: {'$lt': dateTime}, endDate: {'$gte': dateTime} }).populate({
+    return WeekBet.find().sort({ startDate: -1 }).limit(1).populate({
         path: 'gamesList',
         populate: {
             path: 'firstTeam secondTeam'
@@ -15,7 +16,7 @@ const getCurrentWeekBets = () => {
 }
 
 const getAllWeekBets = () => {
-    return WeekBet.find({}).populate({
+    return WeekBet.find({ status: 'done' }).populate({
         path: 'gamesList',
         populate: {
             path: 'firstTeam secondTeam'
@@ -27,10 +28,15 @@ const deleteOneById = id => {
     return WeekBet.deleteOne({ _id: id })
 }
 
+const update = params => {
+    return WeekBet.findByIdAndUpdate(params._id, params)
+}
+
 
 module.exports = {
     insertOne,
     getCurrentWeekBets,
     getAllWeekBets,
-    deleteOneById
+    deleteOneById,
+    update
 }
